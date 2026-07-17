@@ -1,13 +1,23 @@
 const { Rest, Realtime } = require('ably');
 
 const rest = new Rest(process.env.KEY);
+const connection = process.env.CONNECTION;
+const clientId = `nevaya-${connection}`;
+let realtimeHost;
+
+if (connection === 'proxy') {
+  realtimeHost = 'ably.tv.nevaya.net';
+} else if (connection === 'direct') {
+  realtimeHost = 'realtime.ably.io';
+} else {
+  throw new Error(`Unrecognised CONNECTION=${connection}`);
+}
 
 const run = async () => {
-  const details = await rest.auth.requestToken({ clientId: 'tls-proxy-test' })
+  const details = await rest.auth.requestToken({ clientId })
 
   const realtime = new Realtime({
-    // realtimeHost: 'realtime.ably.io',
-    realtimeHost: 'ably.tv.nevaya.net',
+    realtimeHost,
     logLevel: 4,
     tokenDetails: details,
   });

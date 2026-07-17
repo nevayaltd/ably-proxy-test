@@ -5,4 +5,12 @@ an origin will permit us to wrap our own TLS policy for elderly clients.
 
 ## Usage:
 
-    $ KEY=YOUR_KEY node index.js
+For direct connection:
+
+    $ KEY=YOUR_KEY CONNECTION=direct node index.js
+
+For proxy:
+
+    $ KEY=YOUR_KEY CONNECTION=proxy node index.js
+
+Client ID will be `nevaya-direct` or `nevaya-proxy` accordingly.
